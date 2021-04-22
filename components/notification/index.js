@@ -1,4 +1,4 @@
-import Notification from "./notifications.vue";
+import Notification from "./notification.vue";
 import notify from "./instance";
 
 export default Vue => {

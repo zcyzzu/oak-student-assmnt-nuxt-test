@@ -1,5 +1,5 @@
 import Vue from "vue";
-import Component from "./notifications";
+import Component from "./notification";
 
 const NotificationConstructor = Vue.extend(Component);
 
@@ -14,7 +14,7 @@ const notify = options => {
       ...rest
     },
     data: {
-      autoClose: autoClose === undefined ? 3000 : autoClose
+      autoClose: autoClose === undefined ? 2500 : autoClose
     }
   });
 

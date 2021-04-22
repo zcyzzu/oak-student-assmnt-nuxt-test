@@ -1,4 +1,4 @@
-import Notification from "./notifications.vue";
+import Notification from "./notification.vue";
 
 export default {
   extends: Notification,
