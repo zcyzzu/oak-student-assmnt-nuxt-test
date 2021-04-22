@@ -1,0 +1,23 @@
+{
+  "name": "oak-student-assmnt-nuxt",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@improbable-eng/grpc-web": "^0.14.0",
+    "core-js": "^3.6.5",
+    "exceljs": "^4.2.1",
+    "file-saver": "^2.0.5",
+    "google-protobuf": "^3.15.8",
+    "grpc": "^1.24.6",
+    "nuxt": "^2.14.6"
+  },
+  "devDependencies": {
+    "@nuxtjs/vuetify": "^1.11.2"
+  }
+}
