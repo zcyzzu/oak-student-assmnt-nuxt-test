@@ -6,7 +6,7 @@
 <script>
 import { mapState, mapMutations, mapActions } from "vuex";
 export default {
-  layout: "admin",
+  layout: "admins",
   name: "",
   components: {},
   data() {

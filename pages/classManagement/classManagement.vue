@@ -7,7 +7,7 @@
 import { mapState, mapMutations, mapActions } from "vuex";
 export default {
   name: "",
-  layout: "admin",
+  layout: "admins",
   components: {},
   data() {
     return {};

@@ -17,7 +17,6 @@ const notify = options => {
       autoClose: autoClose === undefined ? 2500 : autoClose
     }
   });
-
   const id = `notification_${seed++}`;
   instance.id = id;
 

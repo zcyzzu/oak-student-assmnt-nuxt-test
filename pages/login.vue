@@ -1,7 +1,6 @@
 <template>
-  <div id="login" class="">
-    <test></test>
-    <v-container class=" d-flex align-center">
+  <div id="login" style="background:url('/signBg.jpeg') center/cover no-repeat">
+    <v-container class="maxHeight d-flex align-center">
       <v-card
         id="card"
         :style="$vuetify.breakpoint.smAndDown ? 'width:350px' : 'width: 400px'"
@@ -57,13 +56,13 @@
   </div>
 </template>
 <script>
-import { mapState, mapMutations, mapActions } from "vuex";
+import { mapState, mapMutations } from "vuex";
 export default {
   layout: "login",
   data: () => ({
     valid: true,
     showPassword: false,
-    account: "",
+    account: "school",
     accountMsg: "",
     accountRules: v => {
       if (v) {
@@ -72,7 +71,7 @@ export default {
         return "请输入账号！";
       }
     },
-    password: "",
+    password: "asdasdasd",
     passwordMsg: "",
     passwordRules: v => {
       if (v) {
@@ -85,14 +84,47 @@ export default {
   methods: {
     validate(v) {
       if (this.$refs.form.validate()) {
-        this.notify({
-          content: "登陆成功！"
-        });
-        // this.$router.push("/teacherManagement/teacherManagement");
+        if (this.account === "school") {
+          this.notify({
+            content: "学校管理员登陆成功"
+          });
+          this.setToken(1);
+          this.setAdmin(1);
+          this.setAdminRoute(1);
+          this.$router.push(this.adminRoute[0].children[0].to);
+        } else if (this.account === "teacher") {
+          this.notify({
+            content: "班级管理员登陆成功"
+          });
+          this.setToken(2);
+          this.setAdmin(2);
+          this.setAdminRoute(2);
+          this.$router.push(this.adminRoute[1].children[1].to);
+        } else {
+          this.notify({
+            content: "普通教师登陆成功"
+          });
+          this.setToken(3);
+          this.setAdmin(3);
+          this.setAdminRoute(3);
+          this.$router.push(this.adminRoute[2].children[2].to);
+        }
       } else {
         v.target.blur();
       }
-    }
+    },
+    ...mapMutations("localStorage", {
+      setToken: "setToken",
+      setAdminRoute: "setAdminRoute"
+    }),
+    ...mapMutations("sessionStorage", {
+      setAdmin: "setAdmin"
+    })
+  },
+  computed: {
+    ...mapState("localStorage", {
+      adminRoute: "adminRoute"
+    })
   },
   watch: {
     account(newVal, oldVal) {

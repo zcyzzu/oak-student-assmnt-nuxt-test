@@ -1,13 +1,12 @@
 <template>
   <div>
-    <h1>认证与权限</h1>
+    <h1>创建老师信息/excel导入</h1>
   </div>
 </template>
 <script>
 import { mapState, mapMutations, mapActions } from "vuex";
 export default {
   name: "",
-  layout: "admins",
   components: {},
   data() {
     return {};
@@ -17,4 +16,3 @@ export default {
   computed: {}
 };
 </script>
-<style lang="scss" scoped></style>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>认证与权限</h1>
+    <teacherManagementList></teacherManagementList>
   </div>
 </template>
 <script>

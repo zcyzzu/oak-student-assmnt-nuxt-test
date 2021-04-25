@@ -1,5 +1,5 @@
 <template>
-  <transition name="route" @after-leave="afterLeave" @after-enter="afterEnter">
+  <transition name="route" @after-leave="afterLeave">
     <div
       class="notification"
       :style="[style, color]"
@@ -59,10 +59,7 @@ export default {
     },
     afterLeave() {
       this.$emit("closed");
-    },
-    afterEnter() {},
-    clearTimer() {},
-    createTimer() {}
+    }
   }
 };
 </script>

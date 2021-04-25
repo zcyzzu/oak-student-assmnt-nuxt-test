@@ -38,6 +38,14 @@ export default {
     {
       src: "~/plugins/notify",
       mode: "client"
+    },
+    {
+      src: "~/plugins/directive",
+      mode: "client"
+    },
+    {
+      src: "~/plugins/overlays",
+      mode: "client"
     }
   ],
 
@@ -51,7 +59,15 @@ export default {
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
-  modules: [],
+  modules: [
+    [
+      "nuxt-vuex-localstorage",
+      {
+        localStorage: ["localStorage"], //  If not entered, “localStorage” is the default value
+        sessionStorage: ["sessionStorage"] //  If not entered, “localStorage” is the default value
+      }
+    ]
+  ],
 
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
   vuetify: {
@@ -78,6 +94,6 @@ export default {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
-    transpile: ["vuetify"]
+    transpile: ["vuetify", "nuxt-vuex-localstorage"]
   }
 };

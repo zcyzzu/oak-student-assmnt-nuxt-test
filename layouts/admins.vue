@@ -36,7 +36,9 @@
             qppend
           >
             <v-list-item-content>
-              <v-list-item-title v-text="child.title"></v-list-item-title>
+              <v-list-item-title class="text-caption">{{
+                child.title
+              }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list-group>
@@ -80,17 +82,17 @@ export default {
       miniVariant: false
     };
   },
-  created() {
+  mounted() {
     this.navigationRouteActive(this.$route.path);
   },
   methods: {
-    ...mapMutations({
+    ...mapMutations("localStorage", {
       setTitle: "setTitle",
       navigationRouteActive: "navigationRouteActive"
     })
   },
   computed: {
-    ...mapState({
+    ...mapState("localStorage", {
       title: "title",
       adminRoute: "adminRoute"
     })
