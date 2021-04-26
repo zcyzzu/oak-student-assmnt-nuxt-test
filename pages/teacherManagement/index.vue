@@ -6,10 +6,10 @@
     <h1 v-role="[2]">班级管理员</h1>
     <h1 v-role="[3]">普通老师</h1>
     <v-btn @click="nrq">遮罩层</v-btn>
+    <v-btn to="/401">401</v-btn>
   </div>
 </template>
 <script>
-import { mapState, mapMutations, mapActions } from "vuex";
 export default {
   name: "",
   layout: "admins",

@@ -19,3 +19,5 @@ $ npm run generate
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
 
+ - notification    this.$notify({content:string,type:string})
+ - overlays  this.$overlay(string,true/false)
