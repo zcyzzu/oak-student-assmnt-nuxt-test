@@ -7,9 +7,11 @@
     <h1 v-role="[3]">普通老师</h1>
     <v-btn @click="nrq">遮罩层</v-btn>
     <v-btn to="/401">401</v-btn>
+    {{ adminRoute }}
   </div>
 </template>
 <script>
+import { mapState, mapMutations } from "vuex";
 export default {
   name: "",
   layout: "admins",
@@ -23,6 +25,10 @@ export default {
       this.$overlay("正在加载，请稍后！", true);
     }
   },
-  computed: {}
+  computed: {
+    ...mapState("localStorage", {
+      adminRoute: "adminRoute"
+    })
+  }
 };
 </script>

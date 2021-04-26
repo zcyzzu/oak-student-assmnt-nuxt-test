@@ -46,6 +46,10 @@ export default {
     {
       src: "~/plugins/overlays",
       mode: "client"
+    },
+    {
+      src: "~/plugins/table",
+      mode: "client"
     }
   ],
 

@@ -61,6 +61,26 @@
         @click.stop="drawer = !drawer"
       />
       <v-toolbar-title v-text="title" />
+      <v-spacer></v-spacer>
+      <v-menu min-width="80" transition="scroll-y-transition">
+        <template v-slot:activator="{ on, attrs }">
+          <div style="width:80px" class="text-center">
+            <v-list-item-avatar class="ma-0" v-bind="attrs" v-on="on">
+              <v-img src="https://cdn.vuetifyjs.com/images/john.png"></v-img>
+            </v-list-item-avatar>
+          </div>
+        </template>
+        <v-list>
+          <v-list-item
+            v-for="(ele, index) in menuItems"
+            :key="index"
+            @click="avatar(index)"
+            link
+          >
+            <v-list-item-title class="text-center">{{ ele }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </v-app-bar>
     <v-main>
       <v-container id="dateTable">
@@ -79,17 +99,33 @@ export default {
     return {
       clipped: true,
       drawer: false,
-      miniVariant: false
+      miniVariant: false,
+      menuItems: ["设置", "登出"]
     };
   },
   mounted() {
+    console.log(123486798);
     this.navigationRouteActive(this.$route.path);
   },
   methods: {
     ...mapMutations("localStorage", {
       setTitle: "setTitle",
+      logout: "logout",
+      avatar2setting: "avatar2setting",
       navigationRouteActive: "navigationRouteActive"
-    })
+    }),
+    avatar(index) {
+      switch (index) {
+        case 0:
+          this.$router.push("/accountInfo/");
+          this.avatar2setting();
+          break;
+        case 1:
+          this.$router.push("/login");
+          this.logout();
+          break;
+      }
+    }
   },
   computed: {
     ...mapState("localStorage", {

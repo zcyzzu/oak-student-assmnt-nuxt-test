@@ -32,7 +32,7 @@ export const amdinRoutes = [
       active: false,
       children: [
         {
-          to: "/reviewManagement/reviewManagement",
+          to: "/evaluationManagement/evaluationManagement",
           title: "评测信息"
         }
       ]
@@ -115,7 +115,7 @@ export const amdinRoutes = [
       active: false,
       children: [
         {
-          to: "/reviewManagement/reviewManagement",
+          to: "/evaluationManagement/evaluationManagement",
           title: "评测信息"
         }
       ]
