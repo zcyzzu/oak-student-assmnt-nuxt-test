@@ -104,7 +104,6 @@ export default {
     };
   },
   mounted() {
-    console.log(123486798);
     this.navigationRouteActive(this.$route.path);
   },
   methods: {
@@ -117,8 +116,7 @@ export default {
     avatar(index) {
       switch (index) {
         case 0:
-          this.$router.push("/accountInfo/");
-          this.avatar2setting();
+          this.$router.push("/accountInfo");
           break;
         case 1:
           this.$router.push("/login");

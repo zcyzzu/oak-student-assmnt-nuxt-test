@@ -1,6 +1,10 @@
 <template>
   <div>
-    <h1>班级管理</h1>
+    <commonTitlebar :title="createClass"></commonTitlebar>
+    <classCreate></classCreate>
+    <commonTitlebar :title="inputClass"></commonTitlebar>
+    <excelUpload></excelUpload>
+    <excelCreateClassExampleExcel></excelCreateClassExampleExcel>
   </div>
 </template>
 <script>
@@ -10,7 +14,10 @@ export default {
   layout: "admins",
   components: {},
   data() {
-    return {};
+    return {
+      createClass: "创建班级信息",
+      inputClass: "Excel批量创建班级信息"
+    };
   },
   mounted() {},
   methods: {},

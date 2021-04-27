@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mt-md-8 mt-4 ">
     <input
       type="file"
       accept=".xlsx, .xls"
@@ -19,7 +19,6 @@
         点击上传
       </v-btn>
     </div>
-    <div id="test"></div>
   </div>
 </template>
 <script>
@@ -53,15 +52,13 @@ export default {
           let arrayBuffer = reader.result;
           let workbook = new Excel.Workbook();
           workbook.xlsx.load(arrayBuffer).then(function(workbook) {
-            let result = "";
             //TODO
             //获取到了上传的文件信息  之后上传？如何（需要吗？）展示？
             workbook.worksheets.forEach(function(sheet) {
               sheet.eachRow(function(row, rowNumber) {
-                result += row.values + " | \n";
+                console.log(row.values);
               });
             });
-            document.querySelector("#test").innerHTML = result;
           });
         };
         reader.readAsArrayBuffer(rawFile);
@@ -73,7 +70,7 @@ export default {
       const files = e.dataTransfer.files;
       if (files.length !== 1) {
         this.notify({
-          content: "Only support uploading one file!",
+          content: "仅支持单次单个文件上传！",
           type: "warning"
         });
         return;
@@ -81,7 +78,7 @@ export default {
       const rawFile = files[0]; // only use files[0]
       if (!this.isExcel(rawFile)) {
         this.notify({
-          content: "Only supports upload .xlsx, .xls, .csv suffix files!",
+          content: "仅支持 .xlsx, .xls, .csv 文件上传！",
           type: "error"
         });
         return false;
@@ -99,12 +96,12 @@ export default {
       return /\.(xlsx|xls|csv)$/.test(file.name);
     },
     beforeUpload(file) {
-      const isLt1M = file.size / 1024 / 1024 < 1;
+      const isLt1M = file.size / 1024 / 1024 < 5;
       if (isLt1M) {
         return true;
       }
       this.notify({
-        content: "Please do not upload files larger than 1m in size.",
+        content: "请不要上传大于5m的文件！",
         type: "error"
       });
       return false;
@@ -119,7 +116,7 @@ export default {
 }
 .drop {
   border: 2px dashed #bbb;
-  width: 600px;
+  max-width: 600px;
   height: 160px;
   font-size: 24px;
   border-radius: 5px;

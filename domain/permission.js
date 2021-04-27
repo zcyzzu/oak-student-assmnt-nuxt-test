@@ -6,7 +6,7 @@ export const amdinRoutes = [
       active: false,
       children: [
         {
-          to: "/teacherManagement/",
+          to: "/teacherManagement",
           title: "创建/导入老师信息"
         },
         {
@@ -22,7 +22,11 @@ export const amdinRoutes = [
       children: [
         {
           to: "/classManagement/classManagement",
-          title: "班级信息"
+          title: "创建/导入班级信息"
+        },
+        {
+          to: "/classManagement/getList",
+          title: "获取/更新班级信息"
         }
       ]
     },
@@ -44,7 +48,11 @@ export const amdinRoutes = [
       children: [
         {
           to: "/studentManagement/studentManagement",
-          title: "学生信息"
+          title: "创建/导入学生信息"
+        },
+        {
+          to: "/studentManagement/getList",
+          title: "获取/更新学生信息"
         }
       ]
     },
@@ -76,7 +84,7 @@ export const amdinRoutes = [
       active: false,
       children: [
         {
-          to: "/accountInfo/",
+          to: "/accountInfo",
           title: "账号信息"
         }
       ]
@@ -105,7 +113,11 @@ export const amdinRoutes = [
       children: [
         {
           to: "/classManagement/classManagement",
-          title: "班级信息"
+          title: "创建/导入班级信息"
+        },
+        {
+          to: "/classManagement/getList",
+          title: "获取/更新班级信息"
         }
       ]
     },

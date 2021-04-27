@@ -1,6 +1,10 @@
 <template>
   <div>
-    <h1>学生管理</h1>
+    <commonTitlebar :title="studentInfo"></commonTitlebar>
+    <studentCreate></studentCreate>
+    <commonTitlebar :title="inputStudent"></commonTitlebar>
+    <excelUpload></excelUpload>
+    <excelCreateStudentExampleExcel></excelCreateStudentExampleExcel>
   </div>
 </template>
 <script>
@@ -10,7 +14,10 @@ export default {
   layout: "admins",
   components: {},
   data() {
-    return {};
+    return {
+      studentInfo: "创建学生/家长信息",
+      inputStudent: "Excel批量创建学生/家长信息"
+    };
   },
   mounted() {},
   methods: {},

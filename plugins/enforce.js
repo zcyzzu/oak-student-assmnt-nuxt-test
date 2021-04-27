@@ -2,6 +2,7 @@ export default function({ app, store, error }) {
   app.router.beforeEach((to, from, next) => {
     if (store.state.localStorage.token) {
       if (store.state.sessionStorage.admin) {
+        store.commit("localStorage/navigationRouteActive", to.path);
         next();
         //已经登陆 有用户信息 只需要判断to.path是否在adminRoute中
       } else {

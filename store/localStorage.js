@@ -17,6 +17,10 @@ export const mutations = {
   setAdminRoute(state, v) {
     state.adminRoute = amdinRoutes[v - 1];
   },
+  /**
+   * @description 每次进行刷新时  读取当前path控制相应的active
+   * 展开对应的左侧navigator bar
+   */
   navigationRouteActive(state, path) {
     state.adminRoute.forEach(element => {
       for (const i of element.children) {
@@ -31,8 +35,7 @@ export const mutations = {
     });
   },
   /**
-   *
-   * @description 登出将
+   * @description 登出 将localStorage中的内容初始化
    */
   logout(state) {
     state.token = null;
@@ -41,19 +44,6 @@ export const mutations = {
     that.notify({
       content: "登出成功！"
     });
-  },
-  /**
-   *
-   * @description 点击头像下拉框中的设置时 跳转到设置页面
-   * 将adminRoute中设置active置为true，其余部分为false
-   */
-  avatar2setting(state) {
-    state.adminRoute.forEach(element => {
-      for (const i of element.children) {
-        element.active = false;
-      }
-    });
-    state.adminRoute[state.adminRoute.length - 1].active = true;
   }
 };
 

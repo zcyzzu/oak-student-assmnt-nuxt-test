@@ -1,61 +1,56 @@
 <template>
-  <div>
-    <vxe-table :align="allAlign" :data="tableData">
-      <vxe-table-column type="seq" title="序号" width="60"></vxe-table-column>
-      <vxe-table-column field="name" title="Name"></vxe-table-column>
-      <vxe-table-column field="sex" title="Sex"></vxe-table-column>
-      <vxe-table-column field="age" title="Age"></vxe-table-column>
-    </vxe-table>
-  </div>
+  <v-stepper v-model="e1">
+    <v-stepper-header>
+      <v-stepper-step :complete="e1 > 1" step="1">
+        Name of step 1
+      </v-stepper-step>
+
+      <v-divider></v-divider>
+
+      <v-stepper-step :complete="e1 > 2" step="2">
+        Name of step 2
+      </v-stepper-step>
+
+      <v-divider></v-divider>
+
+      <v-stepper-step step="3">
+        Name of step 3
+      </v-stepper-step>
+    </v-stepper-header>
+
+    <v-stepper-items>
+      <v-stepper-content step="1">
+        <v-card class="mb-12" color="grey lighten-1" height="200px">
+          1235465
+        </v-card>
+        <v-btn color="primary" @click="e1 = 2">
+          下一步
+        </v-btn>
+      </v-stepper-content>
+      <v-stepper-content step="2">
+        <v-card class="mb-12" color="grey lighten-1" height="200px"></v-card>
+        <v-btn color="primary" @click="e1 = 3">
+          下一步
+        </v-btn>
+        <v-btn color="primary" @click="e1 = 1">
+          上一步
+        </v-btn>
+      </v-stepper-content>
+      <v-stepper-content step="3">
+        <v-card class="mb-12" color="grey lighten-1" height="200px"></v-card>
+        <v-btn color="primary" @click="e1 = 1">
+          下一步
+        </v-btn>
+      </v-stepper-content>
+    </v-stepper-items>
+  </v-stepper>
 </template>
 <script>
-import { mapState, mapMutations, mapActions } from "vuex";
 export default {
-  name: "",
-  components: {},
-  layout: "admins",
   data() {
     return {
-      allAlign: "center",
-      tableData: [
-        {
-          id: 10001,
-          name: "Test1",
-          role: "Develop",
-          sex: "Man",
-          age: 28,
-          address: "vxe-table 从入门到放弃"
-        },
-        {
-          id: 10002,
-          name: "Test2",
-          role: "Test",
-          sex: "Women",
-          age: 22,
-          address: "Guangzhou"
-        },
-        {
-          id: 10003,
-          name: "Test3",
-          role: "PM",
-          sex: "Man",
-          age: 32,
-          address: "Shanghai"
-        },
-        {
-          id: 10004,
-          name: "Test4",
-          role: "Designer",
-          sex: "Women ",
-          age: 24,
-          address: "Shanghai"
-        }
-      ]
+      e1: 1
     };
-  },
-  mounted() {},
-  methods: {},
-  computed: {}
+  }
 };
 </script>
-<style lang="scss" scoped></style>

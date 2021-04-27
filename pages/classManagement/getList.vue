@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h1>所有老师列表/更新老师状态</h1>
+    <commonTitlebar :title="classInfo"></commonTitlebar>
+    <classList class="mt-md-8 mt-4"></classList>
   </div>
 </template>
 <script>
@@ -8,8 +9,11 @@ import { mapState, mapMutations, mapActions } from "vuex";
 export default {
   name: "",
   components: {},
+  layout: "admins",
   data() {
-    return {};
+    return {
+      classInfo: "班级列表"
+    };
   },
   mounted() {},
   methods: {},
