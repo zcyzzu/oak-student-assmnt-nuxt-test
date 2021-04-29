@@ -1,6 +1,12 @@
 <template>
-  <div>
-    <vxe-table align="center" :data="tableData">
+  <div id="box">
+    <vxe-table
+      align="center"
+      highlight-hover-row
+      :loading="loading"
+      empty-text="没有更多数据了！"
+      :data="tableData"
+    >
       <vxe-table-column type="seq" title="序号" width="60"></vxe-table-column>
       <vxe-table-column field="name" title="姓名"></vxe-table-column>
       <vxe-table-column field="num" title="班级序号"></vxe-table-column>
@@ -44,6 +50,7 @@ export default {
   data() {
     return {
       studentInfo: "",
+      loading: false,
       tablePage1: {
         currentPage: 1,
         pageSize: 15,
@@ -56,6 +63,7 @@ export default {
     /**
      * @description 请求第一页教师信息
      */
+    this.loading = true;
     this.findList1();
   },
   methods: {
@@ -83,6 +91,7 @@ export default {
     },
     findList1() {
       setTimeout(() => {
+        this.loading = false;
         this.tablePage1.totalResult = 6;
         this.tableData = [
           {
