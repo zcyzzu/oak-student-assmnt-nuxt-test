@@ -57,6 +57,12 @@
 </template>
 <script>
 import { mapState, mapMutations } from "vuex";
+/**
+ * 自定义下拉选择区间组件
+ * @module pages.login
+ * @author zcy
+ * @description 登陆组件
+ *  */
 export default {
   layout: "login",
   data: () => ({
@@ -82,36 +88,38 @@ export default {
     }
   }),
   methods: {
+    /**
+     * 解释
+     * @function 登陆函数
+     * @param {v} 无参数
+     */
     validate(v) {
       if (this.$refs.form.validate()) {
         if (this.account === "school") {
           this.notify({
             content: "学校管理员登陆成功"
           });
-          this.setToken(1);
-          this.setAdmin(1);
-          this.setAdminRoute(1);
-          this.$router.push(this.adminRoute[0].children[0].to);
+          this.saveAccountInfoForLogin(1);
         } else if (this.account === "teacher") {
           this.notify({
             content: "班级管理员登陆成功"
           });
-          this.setToken(2);
-          this.setAdmin(2);
-          this.setAdminRoute(2);
-          this.$router.push(this.adminRoute[1].children[1].to);
+          this.saveAccountInfoForLogin(2);
         } else {
           this.notify({
             content: "普通教师登陆成功"
           });
-          this.setToken(3);
-          this.setAdmin(3);
-          this.setAdminRoute(3);
-          this.$router.push(this.adminRoute[2].children[2].to);
+          this.saveAccountInfoForLogin(3);
         }
       } else {
         v.target.blur();
       }
+    },
+    saveAccountInfoForLogin(num) {
+      this.setToken(num);
+      this.setAdmin(num);
+      this.setAdminRoute(num);
+      this.$router.push(this.adminRoute[0].children[0].to);
     },
     ...mapMutations("localStorage", {
       setToken: "setToken",

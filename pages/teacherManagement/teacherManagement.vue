@@ -5,7 +5,7 @@
     <commonTitlebar :title="inputTeacher"></commonTitlebar>
     <excelUpload></excelUpload>
     <excelCreateTeacherExampleExcel></excelCreateTeacherExampleExcel>
-    <!-- <v-btn @click="nrq">遮罩层</v-btn>  -->
+    <!-- <v-btn @click="nrq">遮罩层</v-btn> -->
   </div>
 </template>
 <script>

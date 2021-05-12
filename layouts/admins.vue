@@ -6,9 +6,9 @@
       :permanent="$vuetify.breakpoint.mdAndUp"
       :mini-variant="miniVariant"
       :clipped="clipped"
-      width="226"
-      color="blue-grey lighten-2"
+      color="blue-grey "
       app
+      dark
     >
       <v-list>
         <v-list-group
@@ -16,7 +16,7 @@
           :key="index"
           :value="item.active"
           :prepend-icon="item.icon"
-          color="#fff"
+          color="black"
           no-action
         >
           <template v-slot:activator>
@@ -32,7 +32,6 @@
             :key="child.title"
             :to="child.to"
             @click="setTitle(item)"
-            exact
             qppend
           >
             <v-list-item-content>

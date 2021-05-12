@@ -6,7 +6,7 @@
         <v-card-text>
           <v-switch
             v-model="status"
-            :label="`${status ? '在职' : '离职'}`"
+            :label="`${status ? '在职' : '休假'}`"
           ></v-switch>
         </v-card-text>
         <v-card-actions class="d-flex justify-end">

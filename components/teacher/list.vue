@@ -6,32 +6,40 @@
       empty-text="没有更多数据了！"
       :data="tableData"
       highlight-hover-row
+      keep-source
+      ref="xTable"
+      border
+      :edit-rules="validRules"
+      @edit-closed="editClosedEvent"
+      :edit-config="{ trigger: 'dblclick', mode: 'cell', showStatus: true }"
     >
       <vxe-table-column type="seq" title="序号" width="60"></vxe-table-column>
-      <vxe-table-column field="name" title="姓名"></vxe-table-column>
-      <vxe-table-column field="tel" title="手机"></vxe-table-column>
-      <vxe-table-column field="grade" title="年级"></vxe-table-column>
-      <vxe-table-column title="操作" show-overflow>
+      <vxe-table-column
+        field="name"
+        title="姓名"
+        :edit-render="{ name: 'input' }"
+      ></vxe-table-column>
+      <vxe-table-column
+        field="tel"
+        title="手机"
+        :edit-render="{ name: 'input' }"
+      ></vxe-table-column>
+      <vxe-table-column
+        field="grade"
+        title="年级"
+        :edit-render="{ name: '$select', options: gradeList }"
+      ></vxe-table-column>
+      <vxe-table-column
+        field="status"
+        title="状态"
+        :edit-render="{ name: '$select', options: statusList }"
+      >
+      </vxe-table-column>
+      <vxe-table-column title="操作" width="60" show-overflow>
         <template #default="{row}">
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn v-bind="attrs" v-on="on" icon @click="editEvent(row)">
-                <v-icon small>mdi-file-edit-outline</v-icon>
-              </v-btn>
-            </template>
-            <span>更新教师信息</span>
-          </v-tooltip>
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn v-bind="attrs" v-on="on" icon @click="statusEvent(row)">
-                <v-icon small>mdi-account-clock-outline </v-icon>
-              </v-btn>
-            </template>
-            <span>更新教师状态</span>
-          </v-tooltip>
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn v-bind="attrs" v-on="on" icon @click="editEvent(row)">
+              <v-btn v-bind="attrs" v-on="on" icon @click="resetAccount(row)">
                 <v-icon small>mdi-lock-reset </v-icon>
               </v-btn>
             </template>
@@ -54,12 +62,6 @@
         >
       </template>
     </vxe-pager>
-    <teacherUpdateDialog
-      ref="update"
-      :teacherInfo="teacherInfo"
-      @clearTeacherInfo="clearTeacherInfo"
-    ></teacherUpdateDialog>
-    <teacherStatus ref="status" :teacherStatus="teacherStatus"></teacherStatus>
   </div>
 </template>
 <script>
@@ -68,8 +70,6 @@ export default {
   layout: "admins",
   data() {
     return {
-      teacherInfo: "",
-      teacherStatus: false,
       loading: false,
       tablePage1: {
         currentPage: 1,
@@ -78,6 +78,13 @@ export default {
       },
       tableData: []
     };
+  },
+  computed: {
+    ...mapState("validTable", {
+      statusList: "statusList",
+      gradeList: "gradeList",
+      validRules: "validRules"
+    })
   },
   created() {
     /**
@@ -95,27 +102,31 @@ export default {
       this.findList1();
     },
     /**
-     * @description 更新教师信息 将当前教师信息通过父子组件传参 送至dialog
+     * @description 更新教师状态
      * @argument 当前教师信息
      */
-    editEvent(row) {
-      this.teacherInfo = row;
-      setTimeout(() => {
-        this.$refs.update.dialog = true;
-      }, 100);
+    updateStatus(row) {
+      console.log("更新教师信息");
+      this.notify({ content: "教师状态更新成功！" });
     },
     /**
-     * @description 更新教师状态 将当前教师状态通过父子组件传参 送至dialog
-     * @argument 当前教师信息
+     * @description 重置教师账户
+     *
      */
-    statusEvent(row) {
-      this.teacherStatus = row.status;
-      this.$refs.status.dialog = true;
+    resetAccount(row) {
+      this.notify({ content: "教师账户重置成功！" });
+      console.log(row);
     },
-    clearTeacherInfo() {
-      setTimeout(() => {
-        this.teacherInfo = "";
-      }, 100);
+    async editClosedEvent(row) {
+      const $table = this.$refs.xTable;
+      const errMap = await $table.validate().catch(errMap => errMap);
+      if (errMap) {
+        this.$XModal.message({ status: "error", content: "校验不通过！" });
+      } else {
+        console.log(row);
+        //TODO 编辑的单元格 在这里校验成功后 调用update 进行更新
+        this.$XModal.message({ status: "success", content: "校验成功！" });
+      }
     },
     findList1() {
       setTimeout(() => {
@@ -126,107 +137,36 @@ export default {
             id: 10001,
             name: "张三",
             tel: "13299046537",
-            status: true,
+            status: "休假",
             grade: 2
           },
           {
             id: 10002,
             name: "小红",
             tel: "13299046537",
-            status: false,
+            status: "正常",
             grade: 1
           },
           {
             id: 10003,
             name: "小明",
             tel: "13299046537",
-            status: false,
+            status: "休假",
             grade: 4
           },
           {
             id: 10004,
             name: "小白",
             tel: "13299046537",
-            status: true,
+            status: "正常",
             grade: 5
           },
           {
             id: 10001,
             name: "张三",
             tel: "13299046537",
-            status: true,
+            status: "正常",
             grade: 2
-          },
-          {
-            id: 10002,
-            name: "小红",
-            tel: "13299046537",
-            status: false,
-            grade: 1
-          },
-          {
-            id: 10003,
-            name: "小明",
-            tel: "13299046537",
-            status: true,
-            grade: 4
-          },
-          {
-            id: 10004,
-            name: "小白",
-            tel: "13299046537",
-            status: true,
-            grade: 5
-          },
-          {
-            id: 10001,
-            name: "张三",
-            tel: "13299046537",
-            status: false,
-            grade: 2
-          },
-          {
-            id: 10002,
-            name: "小红",
-            tel: "13299046537",
-            status: true,
-            grade: 1
-          },
-          {
-            id: 10003,
-            name: "小明",
-            tel: "13299046537",
-            status: true,
-            grade: 4
-          },
-          {
-            id: 10004,
-            name: "小白",
-            tel: "13299046537",
-            status: true,
-            grade: 5
-          },
-          {
-            id: 10001,
-            name: "张三",
-            tel: "13299046537",
-            status: true,
-            grade: 2
-          },
-          {
-            id: 10002,
-            name: "小红",
-            tel: "13299046537",
-            status: true,
-
-            grade: 1
-          },
-          {
-            id: 10003,
-            name: "小明",
-            tel: "13299046537",
-            status: true,
-            grade: 4
           }
         ];
       }, 300);

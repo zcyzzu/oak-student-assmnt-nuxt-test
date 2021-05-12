@@ -4,10 +4,10 @@ export default {
   // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
   ssr: false,
   target: "static",
-  server: {
-    port: 8888,
-    host: "0.0.0.0"
-  },
+  // server: {
+  //   port: 8888,
+  //   host: "0.0.0.0"
+  // },
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     title: "xx小学xx",
@@ -56,6 +56,10 @@ export default {
     },
     {
       src: "~/plugins/rightClick",
+      mode: "client"
+    },
+    {
+      src: "~/plugins/alert",
       mode: "client"
     }
   ],

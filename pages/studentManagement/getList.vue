@@ -15,17 +15,8 @@ export default {
       studentList: "学生/家长列表"
     };
   },
-  mounted() {
-    document.addEventListener("contextmenu", e => {
-      e.preventDefault();
-      this.showMenu(e);
-    });
-  },
-  methods: {
-    showMenu(e) {
-      console.log(e);
-    }
-  },
+  mounted() {},
+  methods: {},
   computed: {}
 };
 </script>

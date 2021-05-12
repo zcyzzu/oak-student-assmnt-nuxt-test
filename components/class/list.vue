@@ -1,21 +1,62 @@
 <template>
   <div>
     <vxe-table
+      border
+      ref="xTable"
+      keep-source
       align="center"
       :loading="loading"
       empty-text="没有更多数据了！"
       :data="tableData"
+      :edit-rules="validRules"
+      @edit-closed="editClosedEvent"
+      :edit-config="{ trigger: 'dblclick', mode: 'cell', showStatus: true }"
     >
       <vxe-table-column type="seq" title="序号" width="60"></vxe-table-column>
-      <vxe-table-column field="name" title="班级名称"></vxe-table-column>
-      <vxe-table-column field="num" title="班级序号"></vxe-table-column>
-      <vxe-table-column field="grade" title="年级"></vxe-table-column>
-      <vxe-table-column field="admitted" title="入学年份"></vxe-table-column>
-      <vxe-table-column title="操作" width="100" show-overflow>
+      <vxe-table-column
+        field="name"
+        title="班级名称"
+        :edit-render="{ name: 'input' }"
+      ></vxe-table-column>
+      <vxe-table-column
+        field="num"
+        title="班级序号"
+        :edit-render="{ name: '$input', props: { type: 'number' } }"
+      ></vxe-table-column>
+      <vxe-table-column
+        field="grade"
+        title="年级"
+        :edit-render="{ name: '$select', options: gradeList }"
+      >
+      </vxe-table-column>
+      <vxe-table-column
+        field="admitted"
+        title="入学年份"
+        :edit-render="{ name: '$select', options: admittedList }"
+      ></vxe-table-column>
+      <vxe-table-column title="操作" show-overflow>
         <template #default="{ row }">
-          <v-btn icon @click="editEvent(row)">
-            <v-icon small>mdi-file-edit-outline</v-icon>
-          </v-btn>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn v-bind="attrs" v-on="on" icon @click="deleteClass(row)">
+                <v-icon small>mdi-trash-can-outline </v-icon>
+              </v-btn>
+            </template>
+            <span>删除班级</span>
+          </v-tooltip>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                v-bind="attrs"
+                v-on="on"
+                icon
+                @click="classParentsInfo(row)"
+              >
+                <v-icon small>mdi-account-details-outline </v-icon>
+              </v-btn>
+            </template>
+            <span>查看此班级家长账户信息</span>
+          </v-tooltip>
         </template>
       </vxe-table-column>
     </vxe-table>
@@ -33,11 +74,6 @@
         >
       </template>
     </vxe-pager>
-    <classUpdateDialog
-      ref="update"
-      :classInfo="classInfo"
-      @clearClassInfo="clearClassInfo"
-    ></classUpdateDialog>
   </div>
 </template>
 <script>
@@ -46,7 +82,6 @@ export default {
   layout: "admins",
   data() {
     return {
-      classInfo: "",
       loading: false,
       tablePage1: {
         currentPage: 1,
@@ -55,6 +90,13 @@ export default {
       },
       tableData: []
     };
+  },
+  computed: {
+    ...mapState("validTable", {
+      gradeList: "gradeList",
+      admittedList: "admittedList",
+      validRules: "validRules"
+    })
   },
   created() {
     /**
@@ -72,19 +114,37 @@ export default {
       this.findList1();
     },
     /**
-     * @description 更新教师信息 将当前教师信息通过父子组件传参 送至dialog
-     * @argument 当前教师信息
+     * @description 查看班级学生详细信息
      */
-    editEvent(row) {
-      this.classInfo = row;
-      setTimeout(() => {
-        this.$refs.update.dialog = true;
-      }, 100);
+    classParentsInfo(row) {
+      this.$router.push({
+        path: "/classManagement/getList/classParents",
+        query: {
+          id: row.id
+        }
+      });
     },
-    clearClassInfo() {
-      setTimeout(() => {
-        this.classInfo = "";
-      }, 100);
+    deleteClass(row) {
+      this.$alert({
+        content: "你确定要删除此班级吗？",
+        enter() {
+          this.notify({ content: "此班级已删除！" });
+        },
+        cancel() {
+          this.notify({ content: "已取消删除！", type: "warning" });
+        }
+      });
+    },
+    async editClosedEvent(row) {
+      const $table = this.$refs.xTable;
+      const errMap = await $table.validate().catch(errMap => errMap);
+      if (errMap) {
+        this.$XModal.message({ status: "error", content: "校验不通过！" });
+      } else {
+        console.log(row);
+        //TODO 编辑的单元格 在这里校验成功后 调用update 进行更新
+        this.$XModal.message({ status: "success", content: "校验成功！" });
+      }
     },
     findList1() {
       setTimeout(() => {
@@ -132,4 +192,3 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped></style>
